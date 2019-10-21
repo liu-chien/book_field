@@ -7,8 +7,8 @@ pip install -r requirements.txt
 ```
 
 ## Setting
-1. modify *account_example.py*. Fill in your own accont and password.
-2. rename *account_example.py* </br>
+1. Modify *account_example.py*. Fill in your own accont and password.
+2. Rename *account_example.py* </br>
    `mv account_example.py account.py`
 
 ## Example
