@@ -15,7 +15,7 @@ time_slot = int(args.time - 6)       # 07:00 refers to time slot 1
 date = args.date
 
 # year, month, date, hour, minute, second, microsecond
-start_time = datetime.datetime(int(date[:4]), int(date[4:6]), int(date[6:8]), args.time, 0, 0, 0) - datetime.timedelta(days=3, microseconds=5e5)
+start_time = datetime.datetime(int(date[:4]), int(date[4:6]), int(date[6:8]), args.time, 0, 0, 0) - datetime.timedelta(days=3, microseconds=1e5)
 end_time = start_time + datetime.timedelta(seconds=2)
 
 # field order
