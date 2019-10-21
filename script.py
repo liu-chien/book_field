@@ -30,18 +30,13 @@ agent = Agent(time_slot, date, account['account'], account['password'])
 wait_until(start_time - datetime.timedelta(seconds=0.1))
 counter = 0     # Number of booked field
 stop = False
-# while datetime.datetime.now() < end_time:
-while True:
+while datetime.datetime.now() < end_time:
     for field in field_order:
         if agent.book_field(field):
-            print(datetime.datetime.now())
             counter += 1
             if counter >= 2:
+                print(datetime.datetime.now())
                 stop = True
                 break
     if stop:
         break
-
-
-    
-
