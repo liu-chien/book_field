@@ -36,6 +36,7 @@ def check_time(time):
 check_time(start_time)
 
 counter = 0     # Number of booked field
+stop = False
 while datetime.datetime.now() < end_time:
     for field in field_order:
         if book_field(field, time_slot, date, account['account'], account['password']):
