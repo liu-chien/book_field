@@ -7,12 +7,12 @@ pip install -r requirements.txt
 ```
 
 ## Setting
-1. modify account_example.py. Fill in your own accont and password.
-2. rename account_example.py </br>
+1. modify *account_example.py*. Fill in your own accont and password.
+2. rename *account_example.py* </br>
    `mv account_example.py account.py`
 
 ## Example
-Say one want to book field on 2019/10/10 18:00
+Say one wants to book field on 2019/10/10 18:00
 ```
 python script.py -d 20191110 -t 18
 ```
@@ -21,4 +21,4 @@ python script.py -d 20191110 -t 18
 To change the field booking priority, modify *script.py line 22*
 
 ## Alert
-The script is able to book the field which is **不開放**, make sure to check the available field before running script.
+The script is able to book the field which is <font color='red'>**不開放**</font>, make sure to check the available fields before running the script.
