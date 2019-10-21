@@ -41,8 +41,10 @@ while datetime.datetime.now() < end_time:
         if book_field(field, time_slot, date, account['account'], account['password']):
             counter += 1
             if counter >= 2:
+                stop = True
                 break
-
+    if stop:
+        break
 
 
     
