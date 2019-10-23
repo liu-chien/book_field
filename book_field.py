@@ -78,9 +78,6 @@ class Agent:
             print(result)
             return None
 
-    
-        
-
-if __name__ == '__main__':
-    from account import account
-    book_field(1, 1, '20191025', account['account'], account['password'])
+# if __name__ == '__main__':
+#     from account import account
+#     book_field(1, 1, '20191025', account['account'], account['password'])
