@@ -10,7 +10,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('-t', '--time', type=int, help='Start time. e.g. 18 refers to 18:00')
 parser.add_argument('-d', '--date', help='Date. e.g. 20191023 refers to 2019/10/23')
 parser.add_argument('-o', '--order', help='Not yet be implemented.')
-parser.add_argument('-s', '--email', action='store_true', help='Activate sending email automatically.')
+parser.add_argument('-e', '--email', action='store_true', help='Activate sending email automatically.')
 args = parser.parse_args()
 
 # Booking information
