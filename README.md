@@ -28,5 +28,6 @@ python script.py -d 20191110 -t 18 -e
 ## Advance
 To change the field booking priority, modify *script.py line 22*
 
-## Alert
+## ~~Alert~~
+(Fixed on 2020/02/06)
 The script is able to book the field which is <font color='red'>**不開放**</font>, make sure to check the available fields before running the script.
