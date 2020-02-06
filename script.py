@@ -9,7 +9,7 @@ from send_email.send_book_result import send_book_result
 parser = argparse.ArgumentParser()
 parser.add_argument('-t', '--time', type=int, help='Start time. e.g. 18 refers to 18:00')
 parser.add_argument('-d', '--date', help='Date. e.g. 20191023 refers to 2019/10/23')
-parser.add_argument('-o', '--order', help='Not yet be implemented.')
+parser.add_argument('-o', '--order', type=str, default='56781234', help='Field order you would like to reserve. Default: 56781234')
 parser.add_argument('-e', '--email', action='store_true', help='Activate sending email automatically.')
 args = parser.parse_args()
 
@@ -21,12 +21,14 @@ date = args.date
 start_time = datetime.datetime(int(date[:4]), int(date[4:6]), int(date[6:8]), args.time, 0, 0, 0) - datetime.timedelta(days=3)
 end_time = start_time + datetime.timedelta(seconds=1.5)
 
-# field order
-field_order = [5,6,7,8,1,2,3,4]
-
 # Log in account
 wait_until(start_time - datetime.timedelta(minutes=1))
 agent = Agent(time_slot, date, account['account'], account['password'])
+
+# field order
+field_order = [int(item) for item in list(args.order)]      # Default [5,6,7,8,1,2,3,4]
+available_field = agent.search_available_field()
+field_order = [item for item in field_order if item in available_field]
 
 # Book
 wait_until(start_time - datetime.timedelta(seconds=0.1))
@@ -45,4 +47,10 @@ while datetime.datetime.now() < end_time:
 
 # Send email notification
 if args.email:
-    send_book_result(args.date, args.time, counter)
+    if field_order == []:
+        info = 'No Available Field'
+        print(info)
+    else:
+        info = ''
+    
+    send_book_result(args.date, args.time, counter, info=info)
