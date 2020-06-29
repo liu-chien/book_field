@@ -7,6 +7,7 @@ class Agent:
     def __init__(self, time_slot, date, account, passwd):
         self.usr = {'account': account,'password': passwd}
         self.data = {'field': None, 'timeSlot': str(time_slot), 'account': account, 'date': str(date)}
+        print(self.data)
         self.sess = requests.Session()
         self.log_in()
 
@@ -65,6 +66,7 @@ class Agent:
             return True
         else:
             print(result)
+            print('請檢查帳號密碼是否正確')
             return None
 
     def _check_response(self, response, text):
@@ -76,6 +78,7 @@ class Agent:
             print('Other error occurred: {}'.format(err))  # Python 3.6
         else:
             print('{} success!'.format(text))
+
 
 # if __name__ == '__main__':
 #     from account import account

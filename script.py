@@ -34,7 +34,7 @@ field_order = [item for item in field_order if item in available_field]
 wait_until(start_time - datetime.timedelta(seconds=0.1))
 counter = 0     # Number of booked field
 stop = False
-while datetime.datetime.now() < end_time:
+while True:
     for field in field_order:
         if agent.book_field(field):
             counter += 1
@@ -42,7 +42,7 @@ while datetime.datetime.now() < end_time:
                 print(datetime.datetime.now())
                 stop = True
                 break
-    if stop:
+    if stop or datetime.datetime.now() > end_time:
         break
 
 # Send email notification
