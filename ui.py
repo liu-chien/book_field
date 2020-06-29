@@ -1,9 +1,11 @@
 import tkinter as tk
+import threading
 import os
 import datetime
 from time import sleep
 from book_field import Agent
 from wait_until import wait_until
+import PyQt5
 
 class Application(tk.Frame):
     def __init__(self, master=None):
@@ -60,14 +62,18 @@ class Application(tk.Frame):
         #                       command=self.master.destroy)
         # self.quit.pack()
     def send_booking_request(self):
+        if hasattr(self, "t"):
+            print("只能Summit一次，請關掉重開")
+            return 0
         self._save_info()
-        self._book_field()
-        print('Done')
+        self.t = threading.Thread(target = self._book_field)
+        self.t.start()
 
+        
 
     def _save_info(self):
-        dirname = 'book_info'
-        filename = os.path.join(dirname, 'book_info.txt')
+        dirname = "book_info"
+        filename = os.path.join(dirname, "book_info.txt")
         if not os.path.isdir(dirname):
             os.mkdir(dirname)
         if os.path.isfile(filename):
@@ -78,29 +84,29 @@ class Application(tk.Frame):
         time = self.time.get()
         field = self.field.get()
 
-        with open(filename, 'w') as f:
-            f.write(account + '\n')
-            f.write(passwd + '\n')
-            f.write(date + '\n')
-            f.write(time + '\n')
+        with open(filename, "w") as f:
+            f.write(account + "\n")
+            f.write(passwd + "\n")
+            f.write(date + "\n")
+            f.write(time + "\n")
             f.write(field)
 
-        print('Save info')
+        print("Save info")
               
     def _restore_info(self):
-        dirname = 'book_info'
-        filename = os.path.join(dirname, 'book_info.txt')
+        dirname = "book_info"
+        filename = os.path.join(dirname, "book_info.txt")
 
         if not os.path.isfile(filename):
-            print('Cannot load previous booking info')
+            print("Cannot load previous booking info")
             return 1
         
-        with open(filename, 'r') as f:
-            account = f.readline().replace('\n', '')
-            passwd = f.readline().replace('\n', '')
-            date = f.readline().replace('\n', '')
-            time = f.readline().replace('\n', '')
-            field = f.readline().replace('\n', '')
+        with open(filename, "r") as f:
+            account = f.readline().replace("\n", "")
+            passwd = f.readline().replace("\n", "")
+            date = f.readline().replace("\n", "")
+            time = f.readline().replace("\n", "")
+            field = f.readline().replace("\n", "")
         self.account.insert(0, account)
         self.passwd.insert(0, passwd)
         self.date.insert(0, date)
@@ -110,12 +116,12 @@ class Application(tk.Frame):
     def _book_field(self):
         account = self.account.get()
         passwd = self.passwd.get()
-        dates = self.date.get().split(' ')
-        times = self.time.get().split(' ')
-        order = self.field.get().split(' ')
+        dates = self.date.get().split(" ")
+        times = self.time.get().split(" ")
+        order = self.field.get().split(" ")
 
-        if account == '' or passwd == '' or dates == [''] or times == [''] or order == ['']:
-            print('Fill in booking info before summitting.')
+        if account == "" or passwd == "" or dates == [""] or times == [""] or order == [""]:
+            print("Fill in booking info before summitting.")
             return 1
 
         for date in dates:
@@ -126,7 +132,7 @@ class Application(tk.Frame):
                 
                 # year, month, date, hour, minute, second, microsecond
                 start_time = datetime.datetime(int(date[:4]), int(date[4:6]), int(date[6:8]), time, 0, 0, 0) - datetime.timedelta(days=3)
-                end_time = start_time + datetime.timedelta(seconds=1.5)
+                end_time = start_time + datetime.timedelta(seconds=0.7)
 
                 # Log in account
                 wait_until(start_time - datetime.timedelta(minutes=1))
@@ -146,12 +152,12 @@ class Application(tk.Frame):
                         if agent.book_field(field):
                             counter += 1
                             if counter >= 2:
-                                print(datetime.datetime.now())
                                 stop = True
                                 break
                     if stop or datetime.datetime.now() > end_time:
                         break
-                
+                print("搶完場了，記得上網查結果 (:３っ)∋")
+        
 
 root = tk.Tk()
 root.geometry("600x300+300+300")

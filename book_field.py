@@ -2,6 +2,8 @@ import requests
 from requests.exceptions import HTTPError
 from bs4 import BeautifulSoup
 import pandas as pd
+import datetime
+import threading
 
 class Agent:
     def __init__(self, time_slot, date, account, passwd):
@@ -48,11 +50,22 @@ class Agent:
         return available_field
 
     def book_field(self, field_number):
-        self.data['field'] = str(field_number)
-        r = self.sess.post('http://peo.nthu.edu.tw/nthugym/reservation/reservAction.php', data=self.data)
-        r.encoding = 'utf-8'
-        return self._check_result(r.text)
+        # self.data['field'] = str(field_number)
+        # r = self.sess.post('http://peo.nthu.edu.tw/nthugym/reservation/reservAction.php', data=self.data)
+        
+        # r.encoding = 'utf-8'
+        # return self._check_result(r.text)
+
+        t = threading.Thread(target = self._mthread_book, args=(field_number,))
+        t.start()
+
+        return None
     
+    def _mthread_book(self, field_number):
+        data = self.data.copy()
+        data['field'] = str(field_number)
+        r = self.sess.post('http://peo.nthu.edu.tw/nthugym/reservation/reservAction.php', data=data)
+
     def _check_result(self, text, key1='<script>alert', key2='</script></head>'):
         text = text[1100:1300]
         start = text.find(key1)
