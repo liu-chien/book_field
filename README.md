@@ -10,24 +10,16 @@ pip install -r requirements.txt
 1. Modify *account_example.py*. Fill in your own accont and password
 2. Rename *account_example.py* to *account.py*</br>
    `mv account_example.py account.py`
-3. Optional
-   1. Modify *send_email/email_account_example.py*.
-   2. Rename *send_email/email_account_example.py* to *send_email/email_account.py*</br>
-   `mv send_email/email_account_example.py send_email/email_account.py`
 
 ## Example
-Say one wants to book field on 2019/10/10 18:00
+To book field on 2021/02/05 18:00-19:00
 ```
-python script.py -d 20191110 -t 18
-```
-If one wants to send email to your account.
-```
-python script.py -d 20191110 -t 18 -e
+python book.py -d 20210205 -t 18
 ```
 
-## Advance
-To change the field booking priority, modify *script.py line 22*
+To select field priority, add ```-o``` flag. <br>
+E.g. to book field number 1, 4, 5, 6, 7 in order.
+```
+python book.py -d 20210205 -t 18 -o 14567
+```
 
-## ~~Alert~~
-(Fixed on 2020/02/06)
-The script is able to book the field which is <font color='red'>**不開放**</font>, make sure to check the available fields before running the script.

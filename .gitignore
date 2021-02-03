@@ -1,5 +1,12 @@
-env/*
+# folder
+venv/*
+capcha/*
+.vscode/*
+
+# format
 *.pyc
 
+#file
 account.py
 send_email/email_account.py
+test.py
